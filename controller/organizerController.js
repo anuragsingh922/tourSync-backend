@@ -11,8 +11,6 @@ const getOrganizerTrips = async (req, res) => {
       { organizerEmail: 0 }
     );
 
-    console.log("Organizer Trips : ", trips);
-
     return res.status(200).json({
       message: "Trips in the cart",
       success: true,
@@ -58,7 +56,6 @@ const addOrganizerTrips = async (req, res) => {
 const deleteTrip = async (req, res) => {
   try {
     const { tripID } = req.query;
-    console.log("ID : ", tripID);
 
     if (!tripID) {
       return res.status(400).json({
@@ -144,7 +141,6 @@ const updateTrip = async (req, res) => {
       { organizerEmail: email },
       { organizerEmail: 0 }
     );
-    console.log("Trips : ", trips);
     if (!trips) {
       return res.status(400).json(badRequest());
     }

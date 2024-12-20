@@ -8,8 +8,6 @@ const getallBookedTrips = async (req, res) => {
     const bookedTrips = await bookedTripsModel
       .find({ email: userEmail })
       .populate("tripID");
-
-    console.log("Booked Trips : ", bookedTrips);
     if (!bookedTrips) return res.status(500).json(badRequest());
     return res.status(200).json({
       message: "Booked Trips.",
@@ -35,8 +33,6 @@ const addBookedTrips = async (req, res) => {
       tripID: tripID?.tripID,
       email,
     }));
-
-    console.log({ tripDocuments, email });
 
     const trips = await bookedTripsModel.insertMany(tripDocuments);
 

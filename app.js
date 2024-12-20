@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 app.use(cors({
-  origin: ["http://localhost:3000"], // Array of allowed origins
+  origin: ["http://localhost:3000" , "https://tour-sync-frontend.vercel.app"], // Array of allowed origins
   credentials: true, // Correctly spelled 'credentials'
 }));
 

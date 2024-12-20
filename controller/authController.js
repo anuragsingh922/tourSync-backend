@@ -175,10 +175,8 @@ const registerWithImage = async (req, res) => {
 const verify = async (req, res) => {
   try {
     const token = req.cookies.token;
-    console.log("Token", token);
     if (!token) {
       return res.status(401).json({
-        status: "Token Not Pesent.",
         success: false,
         data: "",
         message: "Token not present",
@@ -201,7 +199,7 @@ const verify = async (req, res) => {
             jwt_secret_refresh,
             async (err, data) => {
               if (err) {
-                console.log("Error in refresh token");
+                console.error("Error in refresh token");
                 return res
                   .status(401)
                   .json({ status: "failed", error: "Token expired" });

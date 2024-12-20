@@ -58,7 +58,6 @@ const addtrip = async (req, res) => {
       cancellationPolicy: cancellationPolicy,
     };
 
-    console.log("Data : ", data, email);
 
     const newTrip = new Trip(data);
 
@@ -77,7 +76,6 @@ const addtrip = async (req, res) => {
 
 const deleteTrip = async (req, res) => {
   try {
-    console.log(("Organize email : ", req?.email));
     return res.status(200).json({
       message: "Organizer trips",
       data: [],

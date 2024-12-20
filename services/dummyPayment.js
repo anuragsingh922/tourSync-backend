@@ -11,7 +11,6 @@ class DummyPaymentService {
       email,
     });
     await payment.save();
-    console.log(payment);
     return payment;
   }
 

@@ -31,7 +31,7 @@ const createPayment = async (req, res) => {
     //   success: true,
     // });
   } catch (error) {
-    console.log("Error in creating payment : ", error);
+    console.error("Error in creating payment : ", error);
     return res.status(500).json(badRequest());
   }
 };

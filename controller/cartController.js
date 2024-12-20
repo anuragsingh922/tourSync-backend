@@ -48,7 +48,6 @@ const addCartTrips = async (req, res) => {
 const deleteTrip = async (req, res) => {
   try {
     const { tripID } = req.query;
-    console.log("ID : ", tripID);
     const email = req?.email;
 
     if (!tripID) {
