@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express();
-const multer = require("multer");
-const path = require("path");
+// const multer = require("multer");
+// const path = require("path");
 
 // const storage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -17,14 +17,14 @@ const path = require("path");
 
 
 
-const storage = multer.memoryStorage(); // Store file in memory
-const upload = multer({ storage });
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage });
 
 const {
   login,
   register,
   verify,
-  registerWithImage,
+  // registerWithImage,
   logout,
 } = require("../../controller/authController");
 

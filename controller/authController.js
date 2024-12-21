@@ -89,7 +89,7 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password , role } = req.body;
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -103,6 +103,7 @@ const register = async (req, res) => {
       name: name,
       email: email,
       password: hashedpass,
+      role : role
     });
 
     user = await newUser.save();
