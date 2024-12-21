@@ -1,6 +1,7 @@
 const Cart = require("../models/cartModel");
 const Trip = require("../models/tripModel.js");
 const { badRequest } = require("../response/badRequest.js");
+const { v4 } = require("uuid");
 
 const getOrganizerTrips = async (req, res) => {
   try {
@@ -9,7 +10,7 @@ const getOrganizerTrips = async (req, res) => {
     const trips = await Trip.find(
       { organizerEmail: email },
       { organizerEmail: 0 }
-    );
+    ).sort({ updatedAt: -1 });
 
     return res.status(200).json({
       message: "Trips in the cart",
@@ -69,9 +70,9 @@ const deleteTrip = async (req, res) => {
     await Cart.findOneAndDelete({ tripID: tripID });
 
     const trips = await Trip.find(
-      { organizerEmail: email },
+      { organizerEmail: req?.email },
       { organizerEmail: 0 }
-    );
+    ).sort({ updatedAt: -1 });
 
     if (!trip) {
       return res.status(400).json({
@@ -138,7 +139,7 @@ const updateTrip = async (req, res) => {
     const trips = await Trip.find(
       { organizerEmail: email },
       { organizerEmail: 0 }
-    );
+    ).sort({ updatedAt: -1 });
     if (!trips) {
       return res.status(400).json(badRequest());
     }
@@ -154,9 +155,65 @@ const updateTrip = async (req, res) => {
   }
 };
 
+const addtrip = async (req, res) => {
+  try {
+    const email = req.email;
+
+    const { tripName, description, price, startingTime, endingTime, slots } =
+      req.body;
+
+    console.log(req.body);
+
+    if (
+      !tripName ||
+      !description ||
+      !price ||
+      !startingTime ||
+      !endingTime ||
+      !slots
+    ) {
+      return res.status(400).json({
+        message: "Please provide all the details",
+        success: false,
+        data: "",
+      });
+    }
+
+    const data = {
+      tripID: v4(),
+      tripName: tripName,
+      description: description,
+      price: price,
+      startingTime: startingTime,
+      endingTime: endingTime,
+      slots: slots,
+      organizerEmail: email,
+    };
+
+    const newTrip = new Trip(data);
+
+    await newTrip.save();
+
+    const trips = await Trip.find(
+      { organizerEmail: email },
+      { organizerEmail: 0 }
+    ).sort({ updatedAt: -1 });
+
+    return res.status(200).json({
+      message: "Trip Added successfully.",
+      success: true,
+      data: trips,
+    });
+  } catch (error) {
+    console.error("Error in adding trip : ", error);
+    return res.status(500).json(badRequest());
+  }
+};
+
 module.exports = {
   getOrganizerTrips,
   addOrganizerTrips,
   deleteTrip,
   updateTrip,
+  addtrip,
 };

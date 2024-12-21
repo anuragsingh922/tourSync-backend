@@ -8,7 +8,7 @@ const getallBookedTrips = async (req, res) => {
     if (!userEmail) return res.status(500).json(badRequest());
     const bookedTrips = await bookedTripsModel
       .find({ email: userEmail })
-      .populate("tripID");
+      .populate("tripID").sort({ updatedAt: -1 });
     if (!bookedTrips) return res.status(500).json(badRequest());
     return res.status(200).json({
       message: "Booked Trips.",
@@ -63,7 +63,7 @@ const addBookedTrips = async (req, res) => {
 
     const allTrips = await bookedTripsModel
       .find({ email }, { email: 0 })
-      .populate("tripID");
+      .populate("tripID").sort({ updatedAt: -1 });
 
     return res.status(200).json({
       message: "Trips booked successfully",

@@ -5,7 +5,7 @@ const getCartTrips = async (req, res) => {
   try {
     const email = req.email;
 
-    const trips = await Cart.find({ email }, { email: 0 }).populate("tripID");
+    const trips = await Cart.find({ email }, { email: 0 }).populate("tripID").sort({ updatedAt: -1 });
 
     return res.status(200).json({
       message: "Trips in the cart",
@@ -32,7 +32,7 @@ const addCartTrips = async (req, res) => {
       return res.status(200).json(badRequest());
     }
 
-    const trips = await Cart.find({ email }, { email: 0 }).populate("tripID");
+    const trips = await Cart.find({ email }, { email: 0 }).populate("tripID").sort({ updatedAt: -1 });;
 
     return res.status(200).json({
       message: "Trips in the cart",
@@ -66,7 +66,7 @@ const deleteTrip = async (req, res) => {
         success: false,
       });
     }
-    const trips = await Cart.find({ email }, { email: 0 }).populate("tripID");
+    const trips = await Cart.find({ email }, { email: 0 }).populate("tripID").sort({ updatedAt: -1 });;
 
     return res.status(200).json({
       message: "Trip deleted successfully.",

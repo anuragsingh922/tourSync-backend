@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const multer = require('multer');
 const cookieParser = require('cookie-parser');
 const { connectToDatabase } = require("./databaseConnection/db");
+const path = require("path");
 
 const app = express();
 app.use(cookieParser());
@@ -25,6 +26,8 @@ connectToDatabase();
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+// app.use('/uploads' , express.static(path.join(__dirname, 'uploads')));
 
 const v1_routes = require("./routes/v1/v1_routes");
 
