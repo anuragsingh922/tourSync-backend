@@ -1,7 +1,10 @@
 const { badRequest } = require("../response/badRequest");
 const paymentService = require("../services/dummyPayment");
+const mongoose = require("mongoose");
 
 const createPayment = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
     const email = req.email;
     const { amount, currency, description } = req.body;
@@ -20,7 +23,10 @@ const createPayment = async (req, res) => {
     );
 
     payment = await paymentService.processPayment(payment?.paymentId);
-    res.status(200).json({
+    await session.commitTransaction();
+    session.endSession();
+
+    return res.status(200).json({
       message: "Payment processed successfully.",
       data: payment,
       success: true,
@@ -32,6 +38,8 @@ const createPayment = async (req, res) => {
     // });
   } catch (error) {
     console.error("Error in creating payment : ", error);
+    await session.abortTransaction();
+    session.endSession();
     return res.status(500).json(badRequest());
   }
 };

@@ -41,7 +41,7 @@ const BookedTripsSchema = new mongoose.Schema(
     },
     cancellationPolicy: {
       type: Array,
-      required: true,
+      default: [{ 15: 100, 7: 50, 0: 0 }],
     },
     images: {
       type: Array,

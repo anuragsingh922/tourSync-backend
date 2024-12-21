@@ -48,7 +48,7 @@ const addBookedTrips = async (req, res) => {
       endingTime: trip.tripID.endingTime,
       price: trip.tripID.price,
       slots: trip.tripID.slots,
-      cancellationPolicy: trip.tripID.cancellationPolicy,
+      // cancellationPolicy: trip.tripID.cancellationPolicy,
       images: trip.tripID.images,
       organizerEmail: trip.tripID.organizerEmail,
       tripCreatedAt: trip.tripID.createdAt,
