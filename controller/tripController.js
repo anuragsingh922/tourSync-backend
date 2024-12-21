@@ -30,6 +30,8 @@ const addtrip = async (req, res) => {
       cancellationPolicy,
     } = req.body;
 
+    console.log(req.body);
+
     if (
       !tripName ||
       !description ||
@@ -37,7 +39,8 @@ const addtrip = async (req, res) => {
       !startingTime ||
       !endingTime ||
       !slots ||
-      !cancellationPolicy
+      !cancellationPolicy ||
+      cancellationPolicy.length === 0
     ) {
       return res.status(400).json({
         message: "Please provide all the details",
@@ -57,7 +60,6 @@ const addtrip = async (req, res) => {
       organizerEmail: email,
       cancellationPolicy: cancellationPolicy,
     };
-
 
     const newTrip = new Trip(data);
 

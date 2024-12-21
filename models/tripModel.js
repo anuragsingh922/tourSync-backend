@@ -36,7 +36,7 @@ const TripSchema = new mongoose.Schema(
       required: true,
     },
     cancellationPolicy: {
-      type: String,
+      type: Array,
       required: true,
     },
     images: {

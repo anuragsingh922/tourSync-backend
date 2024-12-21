@@ -1,4 +1,5 @@
 const bookedTripsModel = require("../models/bookedTrips");
+const Trips = require("../models/tripModel");
 const { badRequest } = require("../response/badRequest");
 
 const getallBookedTrips = async (req, res) => {
@@ -25,13 +26,33 @@ const addBookedTrips = async (req, res) => {
     const tripDetails = req.body;
     const email = req?.email;
 
+    console.log("Trip : ", tripDetails);
+
     if (!Array.isArray(tripDetails)) {
       return res.status(400).json({ message: "tripIDs must be an array" });
     }
 
-    const tripDocuments = tripDetails.map((tripID) => ({
-      tripID: tripID?.tripID,
+    if (tripDetails.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No trips found for the given tripIDs" });
+    }
+
+    // Step 4: Prepare the documents to insert into the bookedTrips collection
+    const tripDocuments = tripDetails.map((trip) => ({
+      tripID: trip.tripID.tripID,
       email,
+      tripName: trip.tripID.tripName,
+      description: trip.tripID.description,
+      startingTime: trip.tripID.startingTime,
+      endingTime: trip.tripID.endingTime,
+      price: trip.tripID.price,
+      slots: trip.tripID.slots,
+      cancellationPolicy: trip.tripID.cancellationPolicy,
+      images: trip.tripID.images,
+      organizerEmail: trip.tripID.organizerEmail,
+      tripCreatedAt: trip.tripID.createdAt,
+      tripUpdatedAt: trip.tripID.updatedAt,
     }));
 
     const trips = await bookedTripsModel.insertMany(tripDocuments);

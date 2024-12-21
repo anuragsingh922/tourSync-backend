@@ -66,6 +66,7 @@ const deleteTrip = async (req, res) => {
 
     // Correcting the method name and ensuring the ID is properly passed
     const trip = await Trip.findOneAndDelete({ tripID: tripID });
+    await Cart.findOneAndDelete({ tripID: tripID });
 
     const trips = await Trip.find(
       { organizerEmail: email },
@@ -76,7 +77,7 @@ const deleteTrip = async (req, res) => {
       return res.status(400).json({
         message: "Trip not found.",
         success: false,
-        data : trips
+        data: trips,
       });
     }
 
@@ -109,6 +110,8 @@ const updateTrip = async (req, res) => {
       tripID,
     } = req.body;
 
+    console.log(req.body);
+
     if (
       !tripName ||
       !description ||
@@ -116,7 +119,8 @@ const updateTrip = async (req, res) => {
       !startingTime ||
       !endingTime ||
       !slots ||
-      !cancellationPolicy
+      !cancellationPolicy ||
+      cancellationPolicy.length === 0
     ) {
       return res.status(400).json({
         message: "Please provide all the details",
