@@ -49,14 +49,19 @@ const login = async (req, res) => {
 
         await newrefreshToken.save();
 
+        console.log(
+          node_env,
+          node_env === "prod" ? "tour-sync-frontend.vercel.app" : "localhost"
+        );
+
         res.cookie("token", token, {
-          httpOnly: true, // Helps prevent XSS attacks
-          secure: true, // Use `true` in production for HTTPS
-          sameSite: "none",
+          httpOnly: true,
+          secure: true,
+          sameSite: "None",
           domain:
             node_env === "prod" ? "tour-sync-frontend.vercel.app" : "localhost",
           path: "/",
-          maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie expiration in milliseconds (1 hour here)
+          maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
         const u = {
@@ -228,7 +233,7 @@ const verify = async (req, res) => {
                 res.cookie("token", token, {
                   httpOnly: true, // Helps prevent XSS attacks
                   secure: true, // Use `true` in production for HTTPS
-                  sameSite: "none",
+                  sameSite: "None",
                   domain:
                     node_env === "prod"
                       ? "tour-sync-frontend.vercel.app"
