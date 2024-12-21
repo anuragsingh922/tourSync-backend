@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { jwt_secret, jwt_secret_refresh } = require("../config.js");
+const { jwt_secret, jwt_secret_refresh , node_env } = require("../config.js");
 const refreshToken = require("../models/refreshToken.js");
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel.js");
@@ -265,7 +265,13 @@ const verify = async (req, res) => {
 
 const logout = (req, res) => {
   try {
-    res.clearCookie("token", { path: "/", domain: "localhost" });
+    res.clearCookie("token", {
+      path: "/",
+      domain:
+      node_env === "prod"
+          ? "tour-sync-frontend.vercel.app"
+          : "localhost",
+    });
     return res.status(200).json({ message: "Logout successfully." });
   } catch (error) {
     console.error("Error in logout removing the cookies : ", error);

@@ -6,15 +6,14 @@ const multer = require('multer');
 const cookieParser = require('cookie-parser');
 const { connectToDatabase } = require("./databaseConnection/db");
 
-const { database_uri } = require("./config");
-
 const app = express();
 app.use(cookieParser());
 
 app.use(express.json());
 app.use(cors({
-  origin: ["http://localhost:3000" , "https://tour-sync-frontend.vercel.app"], // Array of allowed origins
-  credentials: true, // Correctly spelled 'credentials'
+  origin: ["http://localhost:3000" , "https://tour-sync-frontend.vercel.app"],
+  credentials: true,
+  exposedHeaders: ["Set-Cookie"]
 }));
 
 app.use(morgan("dev"));
