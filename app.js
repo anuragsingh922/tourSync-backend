@@ -34,5 +34,5 @@ const v1_routes = require("./routes/v1/v1_routes");
 app.use("/api/v1", v1_routes);
 
 app.listen(PORT, () => {
-  console.log(`QuestionTrend Listining on http://localhost:${PORT}`);
+  console.log(`TourSync Listining on http://localhost:${PORT}`);
 });
