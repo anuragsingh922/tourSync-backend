@@ -8,7 +8,7 @@ const getallBookedTrips = async (req, res) => {
     if (!userEmail) return res.status(500).json(badRequest());
     const bookedTrips = await bookedTripsModel
       .find({ email: userEmail })
-      .populate("tripID").sort({ updatedAt: -1 });
+      .sort({ updatedAt: -1 });
     if (!bookedTrips) return res.status(500).json(badRequest());
     return res.status(200).json({
       message: "Booked Trips.",
@@ -61,7 +61,8 @@ const addBookedTrips = async (req, res) => {
 
     const allTrips = await bookedTripsModel
       .find({ email }, { email: 0 })
-      .populate("tripID").sort({ updatedAt: -1 });
+      .populate("tripID")
+      .sort({ updatedAt: -1 });
 
     return res.status(200).json({
       message: "Trips booked successfully",
@@ -74,4 +75,45 @@ const addBookedTrips = async (req, res) => {
   }
 };
 
-module.exports = { getallBookedTrips, addBookedTrips };
+const deleteBookedTrip = async (req, res) => {
+  try {
+    const { tripID } = req.query;
+    const email = req?.email;
+
+    if (!tripID) {
+      return res.status(400).json({
+        message: "Trip ID is required.",
+        success: false,
+      });
+    }
+
+    // Correcting the method name and ensuring the ID is properly passed
+    const trip = await bookedTripsModel.findByIdAndDelete({
+      _id: tripID.toString(),
+    });
+
+    if (!trip) {
+      return res.status(400).json({
+        message: "Trip not found.",
+        success: false,
+      });
+    }
+    const trips = await bookedTripsModel.find({ email }, { email: 0 }).sort({
+      updatedAt: -1,
+    });
+
+    return res.status(200).json({
+      message: "Trip deleted successfully.",
+      success: true,
+      data: trips,
+    });
+  } catch (error) {
+    console.error("Error deleting the trip: ", error);
+    return res.status(500).json({
+      message: "Internal server error.",
+      success: false,
+    });
+  }
+};
+
+module.exports = { getallBookedTrips, addBookedTrips, deleteBookedTrip };
