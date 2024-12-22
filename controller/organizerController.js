@@ -107,7 +107,13 @@ const updateTrip = async (req, res) => {
       startingTime,
       endingTime,
       slots,
+      location,
+      groupSize,
+      duration,
       tripID,
+      accommodations,
+      tripImage,
+      galleryCategories,
     } = req.body;
 
     if (
@@ -127,12 +133,18 @@ const updateTrip = async (req, res) => {
 
     const data = {
       tripName: tripName,
+      tripImage,
       description: description,
       price: price,
       startingTime: startingTime,
       endingTime: endingTime,
       slots: slots,
       organizerEmail: email,
+      accommodations,
+      galleryCategories,
+      location,
+      groupSize,
+      duration,
     };
 
     await Trip.findOneAndUpdate({ tripID }, { $set: data });
@@ -159,52 +171,82 @@ const addtrip = async (req, res) => {
   try {
     const email = req.email;
 
-    const { tripName, description, price, startingTime, endingTime, slots } =
-      req.body;
+    const {
+      tripName,
+      description,
+      price,
+      startingTime,
+      endingTime,
+      location,
+      groupSize,
+      duration,
+      slots,
+      accommodations,
+      galleryCategories,
+      tripImage
+    } = req.body;
 
+    // Validate required fields
     if (
       !tripName ||
       !description ||
       !price ||
       !startingTime ||
       !endingTime ||
-      !slots
+      !location ||
+      !groupSize ||
+      !duration ||
+      !slots ||
+      !duration ||
+      !tripImage
     ) {
       return res.status(400).json({
-        message: "Please provide all the details",
+        message: "Please provide all the required details",
         success: false,
         data: "",
       });
     }
 
+    // Create data object
     const data = {
       tripID: v4(),
-      tripName: tripName,
-      description: description,
-      price: price,
-      startingTime: startingTime,
-      endingTime: endingTime,
-      slots: slots,
+      tripName,
+      description,
+      tripImage,
+      price,
+      startingTime,
+      endingTime,
+      location,
+      groupSize,
+      duration,
+      slots,
+      accommodations: accommodations || [],
+      galleryCategories: galleryCategories || [],
       organizerEmail: email,
     };
 
+    // Save new trip
     const newTrip = new Trip(data);
-
     await newTrip.save();
 
+    // Fetch trips for the organizer
     const trips = await Trip.find(
       { organizerEmail: email },
-      { organizerEmail: 0 }
+      { organizerEmail: 0 } // Exclude the organizerEmail field from the response
     ).sort({ updatedAt: -1 });
 
     return res.status(200).json({
-      message: "Trip Added successfully.",
+      message: "Trip added successfully.",
       success: true,
       data: trips,
     });
   } catch (error) {
-    console.error("Error in adding trip : ", error);
-    return res.status(500).json(badRequest());
+    console.error("Error in adding trip:", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+      data: "",
+    });
   }
 };
 
