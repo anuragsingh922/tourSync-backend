@@ -35,7 +35,7 @@ Follow these steps to get the project up and running locally:
    ```
 
 3. **Set up environment variables**:  
-   Create a `.env` file in the root directory with the following variables:
+   Create a `config.env` file in the root directory with the following variables:
 
    ```env
    PORT=8081
@@ -44,7 +44,7 @@ Follow these steps to get the project up and running locally:
    PAYMENT_GATEWAY_KEY=<your_payment_gateway_key>
    ```
 
-   **Note**: The `.env` file is already present in the repository for evaluation purposes, so you don't need to add it manually.
+   **Note**: The `config.env` file is already present in the repository for evaluation purposes, so you don't need to add it manually.
 
 4. **Start the application**:
 
@@ -161,3 +161,13 @@ If you'd like to contribute to **TourSync Backend**, follow these steps:
 3. Make your changes and commit them (`git commit -am 'Add a feature'`).
 4. Push your branch to your forked repository (`git push origin feature/your-feature`).
 5. Open a pull request in the original repository.
+
+
+
+### My Details :
+
+- Name : Anurag
+- College : IIIT Sonepat
+- College ID : 12111064
+- Mail : anuragjadu922@gmail.com
+- Contact Number : +91 9896424841
