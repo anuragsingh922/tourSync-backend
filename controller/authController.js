@@ -49,11 +49,6 @@ const login = async (req, res) => {
 
         await newrefreshToken.save();
 
-        console.log(
-          node_env,
-          node_env === "prod" ? "tour-sync-frontend.vercel.app" : "localhost"
-        );
-
         res.cookie("token", token, {
           httpOnly: true,
           secure: true,

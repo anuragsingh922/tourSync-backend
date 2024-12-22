@@ -162,8 +162,6 @@ const addtrip = async (req, res) => {
     const { tripName, description, price, startingTime, endingTime, slots } =
       req.body;
 
-    console.log(req.body);
-
     if (
       !tripName ||
       !description ||

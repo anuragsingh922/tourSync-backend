@@ -26,8 +26,6 @@ const addBookedTrips = async (req, res) => {
     const tripDetails = req.body;
     const email = req?.email;
 
-    console.log("Trip : ", tripDetails);
-
     if (!Array.isArray(tripDetails)) {
       return res.status(400).json({ message: "tripIDs must be an array" });
     }
