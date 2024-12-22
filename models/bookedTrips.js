@@ -6,10 +6,6 @@ const BookedTripsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-    },
     tripName: {
       type: String,
       required: true,
@@ -18,41 +14,108 @@ const BookedTripsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    startingTime: {
-      type: Date,
-      required: true,
-    },
-    organizerEmail: {
+    email: {
       type: String,
-      required: true,
-    },
-    endingTime: {
-      type: Date,
       required: true,
     },
     price: {
       type: String,
       required: true,
     },
-    slots: {
-      type: Array,
+    tripImage: {
+      type: String,
+    },
+    startingTime: {
+      type: Date,
+      required: true,
+    },
+    endingTime: {
+      type: Date,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    groupSize: {
+      type: Number,
       required: true,
     },
     cancellationPolicy: {
       type: Array,
       default: [{ 15: 100, 7: 50, 0: 0 }],
     },
-    images: {
-      type: Array,
+    duration: {
+      type: String,
     },
-    tripCreatedAt: {
-      type: Date,
+    organizerEmail: {
+      type: String,
       required: true,
     },
-    tripUpdatedAt: {
-      type: Date,
-      required: true,
-    },
+    slots: [
+      {
+        start: {
+          type: Date,
+          required: true,
+        },
+        end: {
+          type: Date,
+          required: true,
+        },
+        seats: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    accommodations: [
+      {
+        name: {
+          type: String,
+        },
+        description: {
+          type: String,
+        },
+        imageUrl: {
+          type: String,
+        },
+        amenities: [
+          {
+            type: String,
+          },
+        ],
+      },
+    ],
+    // diningExperiences: [
+    //   {
+    //     name: {
+    //       type: String,
+    //     },
+    //     description: {
+    //       type: String,
+    //     },
+    //     imageUrl: {
+    //       type: String,
+    //     },
+    //   },
+    // ],
+    galleryCategories: [
+      {
+        title: {
+          type: String,
+        },
+        images: [
+          {
+            url: {
+              type: String,
+            },
+            alt: {
+              type: String,
+            },
+          },
+        ],
+      },
+    ],
   },
   { timestamps: true }
 );

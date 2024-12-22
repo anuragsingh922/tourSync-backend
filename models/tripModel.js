@@ -41,9 +41,6 @@ const TripSchema = new mongoose.Schema(
       type: Array,
       default: [{ 15: 100, 7: 50, 0: 0 }],
     },
-    bestTime: {
-      type: String,
-    },
     duration: {
       type: String,
     },
@@ -119,5 +116,5 @@ const TripSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Trip = new mongoose.model("Trip", TripSchema);
+const Trip = new mongoose.model("trip", TripSchema);
 module.exports = Trip;

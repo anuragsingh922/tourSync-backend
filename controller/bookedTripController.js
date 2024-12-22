@@ -40,17 +40,21 @@ const addBookedTrips = async (req, res) => {
     const tripDocuments = tripDetails.map((trip) => ({
       tripID: trip.tripID.tripID,
       email,
-      tripName: trip.tripID.tripName,
-      description: trip.tripID.description,
+      tripName: trip.tripID.tripName || "",
+      tripImage : trip.tripID.tripImage || "",
+      description: trip.tripID.description || "",
       startingTime: trip.tripID.startingTime,
       endingTime: trip.tripID.endingTime,
       price: trip.tripID.price,
       slots: trip.tripID.slots,
-      // cancellationPolicy: trip.tripID.cancellationPolicy,
-      images: trip.tripID.images,
       organizerEmail: trip.tripID.organizerEmail,
       tripCreatedAt: trip.tripID.createdAt,
       tripUpdatedAt: trip.tripID.updatedAt,
+      location: trip.tripID.location,
+      duration: trip.tripID.duration,
+      accommodations: trip.tripID.accommodations || [],
+      galleryCategories: trip.tripID.galleryCategories || [],
+      groupSize : trip.tripID.groupSize
     }));
 
     const trips = await bookedTripsModel.insertMany(tripDocuments);
