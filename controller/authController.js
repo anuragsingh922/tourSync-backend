@@ -63,6 +63,7 @@ const login = async (req, res) => {
           name: user?.name,
           email: user?.email,
           role: user?.role,
+          token : token,
         };
 
         return res.send({
@@ -179,7 +180,7 @@ const registerWithImage = async (req, res) => {
 
 const verify = async (req, res) => {
   try {
-    const token = req.cookies.token;
+    const token = req.headers.authorization;
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -217,6 +218,7 @@ const verify = async (req, res) => {
                   name: data?.name,
                   email: data?.email,
                   role: data?.role,
+                  token : token
                 };
 
                 const token = jwt.sign(user, jwt_secret, {

@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config.js");
 
 const fetchuser = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.headers.authorization;
   if (!token) {
     return res.status(400).send("Please provide the Authorization Token.");
   }
