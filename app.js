@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 app.use(cors({
-  origin: ["http://localhost:3000" , "https://tour-sync-frontend.vercel.app"],
+  origin: ["http://localhost:3000", "https://tour-sync-frontend.vercel.app"],
   credentials: true,
   exposedHeaders: ["Set-Cookie"]
 }));
@@ -30,6 +30,10 @@ const upload = multer({ storage: storage });
 // app.use('/uploads' , express.static(path.join(__dirname, 'uploads')));
 
 const v1_routes = require("./routes/v1/v1_routes");
+
+app.get("/", (req, res) => {
+  res.status(200).send("exploro server working fine.")
+})
 
 app.use("/api/v1", v1_routes);
 
